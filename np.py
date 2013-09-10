@@ -6,6 +6,16 @@ import json
 import urllib2
 from collections import namedtuple
 
+###
+### edit these
+###
+
+API_KEY = 'your_api_key'  # via http://www.last.fm/api
+USERNAME = 'your_last_fm_username'
+
+###
+### helper functions
+###
 def has_date(item):
     try:
         if item['date']['#text']:
@@ -20,6 +30,10 @@ def is_now_playing(item):
     except Exception, e:
         return False
 
+###
+### main
+###
+
 def main():
     # define the Track namedtuple for storing last.fm tracks
     Track = namedtuple('Track', ['artist', 'album', 'song', 'date', 'now_playing'])
@@ -27,8 +41,8 @@ def main():
     if args:
         user = args[0]
     else:
-        user = 'macklinu'
-    api_key = '670e6afbc4541d7add99db2238d4abf9'
+        user = USERNAME
+    api_key = API_KEY
     url = 'http://ws.audioscrobbler.com/2.0/?method=user.getrecenttracks&user=%s&api_key=%s&limit=10&format=json' % (user, api_key)
     # load the raw JSON via HTTP GET request
     j = json.load(urllib2.urlopen(url))
